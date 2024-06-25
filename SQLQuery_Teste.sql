@@ -4,7 +4,7 @@ FROM CONSUMO
 SELECT *
 FROM CONTEUDO
 
---CRIAÇÃO DE TABELA PARA CONSULTA
+--CRIAÃ‡ÃƒO DE TABELA PARA CONSULTA
 SELECT CONSUMO.id_user
 	,CONSUMO.id_conteudo
 	,CONTEUDO.conteudo
@@ -26,6 +26,7 @@ FROM DADOS
 GROUP BY categoria;
 --NOVELA = 3,70 horas
 --SERIE = 7,27 horas
+--OUTRA = 1,77 horas => foi considerada a categoria NULL como OUTRA categoria nÃ£o especificada na base de dados
 
 SELECT categoria
 	,COUNT(*) AS quantidade_plays
@@ -33,8 +34,9 @@ FROM DADOS
 GROUP BY categoria;
 --NOVELA = 9 PLAYS
 --SERIE = 13 PLAYS
+--OUTRA = 3 PLAYS
 
---Ranking de novelas com mais horas consumidas por mês.
+--Ranking de novelas com mais horas consumidas por mÃªs.
 SELECT conteudo
 	,YEAR(data) AS ano
 	,MONTH(data) AS mes
@@ -47,15 +49,15 @@ GROUP BY conteudo
 ORDER BY ano
 	,mes
 	,total_horas_consumidas DESC;
---MÊS 7
---CONTEÚDO A = 1,13 horas
---CONTEÚDO C = 1,01 horas
---MÊS 10
---CONTEÚDO A = 0,58 horas
---MÊS 11
---CONTEÚDO A = 0,97 horas
+--MÃŠS 7
+--CONTEÃšDO A = 1,13 horas
+--CONTEÃšDO C = 1,01 horas
+--MÃŠS 10
+--CONTEÃšDO A = 0,58 horas
+--MÃŠS 11
+--CONTEÃšDO A = 0,97 horas
 
---Conteúdo de primeiro play do usuário
+--ConteÃºdo de primeiro play do usuÃ¡rio
 WITH FirstPlays
 AS (
 	SELECT id_user
@@ -86,7 +88,7 @@ WHERE rn = 1;
 --id_user 185 = D
 --id_user 199 = A
 
---Minutos por play para cada usuário
+--Minutos por play para cada usuÃ¡rio
 SELECT id_user
 	,AVG(horas_consumidas * 60) AS media_minutos_por_play
 FROM DADOS
@@ -99,7 +101,7 @@ GROUP BY id_user;
 --id_user 185 = 33,10 minutos
 --id_user 199 = 32,66 minutos
 
---Qual a categoria mais consumida para cada usuário
+--Qual a categoria mais consumida para cada usuÃ¡rio
 WITH CategoriaConsumo
 AS (
 	SELECT id_user
@@ -123,5 +125,5 @@ WHERE rn = 1;
 --id_user 150 = serie (0,61 horas)
 --id_user 182 = serie (1,55 horas)
 --id_user 185 = serie (1,23 horas)
---id_user 199 = outra (1,24 horas) => foi considerada a categoria NULL como outra categoria não especificada na base de dados
+--id_user 199 = outra (1,24 horas)
 
